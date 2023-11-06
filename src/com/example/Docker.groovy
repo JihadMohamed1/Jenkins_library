@@ -11,7 +11,9 @@ class Docker implements Serializable {
     }
 
     def buildDockerImage(String imageName) {
-        script.echo "building the docker image..."
+        script.sh "docker build -t $imageName MCS1/. "
+    }
+    def DockerLogin(){
         script.withCredentials(
                 [script.usernamePassword(
                         credentialsId: 'nexus_cred',
@@ -19,15 +21,10 @@ class Docker implements Serializable {
                         usernameVariable: 'USER'
                 )]
         ) {
-            script.echo "$script.USER $script.PASS"
-            script.sh 'ls'
-            script.sh "docker build -t $imageName MCS1/. "
-            script.echo "after build"
             script.sh "echo $script.PASS | docker login -u $script.USER --password-stdin 67.205.176.30:8083"
-            script.echo "after login"
-            script.sh "docker push  $imageName"
-            script.echo "after push"
-
         }
+    }
+    def DockerPush(String imageName){
+        script.sh "docker push  $imageName"
     }
 }
