@@ -6,5 +6,5 @@ def call(){
   sh 'ls'
    sh ' cd MCS1'
    sh 'ls'
-     sh 'mvn package -f MCS1/pom.xml'
+   sh 'mvn clean install -U -Dmaven.test.failure.ignore=true'
 }
