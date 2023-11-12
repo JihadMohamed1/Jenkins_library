@@ -11,7 +11,7 @@ class Docker implements Serializable {
     }
 
     def buildDockerImage(String imageName) {
-        script.sh "docker build -t $imageName MCS1/. "
+        script.sh "docker build -t $imageName . "
     }
     def DockerLogin(){
         script.withCredentials(
